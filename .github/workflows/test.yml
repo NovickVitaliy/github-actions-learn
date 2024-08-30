@@ -10,7 +10,7 @@ jobs:
         run: echo "Hello user"
       - name: Get code
         uses: actions/checkout@v3
-      - name: Install NodeJS
+      - name: Install NodeJS (optional)
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -18,3 +18,5 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
+
+        

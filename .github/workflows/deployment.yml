@@ -9,11 +9,6 @@ env:
 
 jobs:
   test:
-    env:
-      MONGODB_CLUSTER_ADDRESS: 
-      MONGODB_USERNAME:
-      MONGODB_PASSWORD:
-      PORT: 8080
     runs-on: ubuntu-latest
     steps:
       - name: Print Greeting
@@ -29,8 +24,7 @@ jobs:
         run: npm ci
       - name: Demo using environemnt variables
         run: | 
-          echo "${{env.PORT}}"
-          echo "${{github.repository_owner}}"
+          echo "${{secrets.PORT}}"
       - name: Run tests
         run: npm test
 

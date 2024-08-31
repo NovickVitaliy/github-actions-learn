@@ -11,10 +11,11 @@ jobs:
         run: echo "Hello user"
       - name: Get code
         uses: actions/checkout@v3
-      - name: Install NodeJS (optional)
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with: 
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - name: Run tests
@@ -28,6 +29,11 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with: 
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install NodeJS (optional)
         uses: actions/setup-node@v3
         with:

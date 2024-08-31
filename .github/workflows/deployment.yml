@@ -1,6 +1,8 @@
-name: Test Demo Project
-on: [push, workflow_dispatch]
-
+name: Deploy Project
+on:
+  push:
+    branches:
+      - main
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -17,13 +19,18 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with: 
+          name: dist-files
+          path: | 
+            dist
+            package.json
 
-  deploy:
+  build:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Print Greeting
-        run: echo "Hello user"
       - name: Get code
         uses: actions/checkout@v3
       - name: Install NodeJS (optional)
@@ -34,6 +41,11 @@ jobs:
         run: npm ci
       - name: Build project
         run: npm run build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy
         run: echo "Deploying ..."
 
